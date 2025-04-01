@@ -30,5 +30,14 @@ public class GamePanel extends JPanel{
 	    // Drawing center line
 	    g.setColor(Color.WHITE); 
 	    g.drawLine(getWidth() / 2, 50, getWidth() / 2, getHeight() - 50);
+	    
+	   // Drawing center circle
+	    g.setColor(Color.WHITE);
+	    g.drawOval(getWidth() / 2 - 50, getHeight() / 2 - 50, 100, 100);
+
+	    // Drawing center spot
+	    g.setColor(Color.WHITE); 
+	    g.fillOval(getWidth() / 2 - 5, getHeight() / 2 - 5, 10, 10);
+
 	}
 }
