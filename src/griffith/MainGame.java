@@ -15,5 +15,11 @@ public class MainGame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setVisible(true);
+        
+     // Adding Game Panel
+    	GamePanel panel = new GamePanel();
+    	frame.add(panel);
+    	frame.pack();
+
 	}
 }
