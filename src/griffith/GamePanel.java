@@ -11,6 +11,7 @@ import java.awt.*;
 public class GamePanel extends JPanel{
 	
 	private JLabel scoreLabel;
+	private JButton resetButton;
 	
 	public GamePanel() {
         setPreferredSize(new Dimension(800, 600));
@@ -63,5 +64,10 @@ public class GamePanel extends JPanel{
   fieldPanel.setPreferredSize(new Dimension(800, 500));
   fieldPanel.setBackground(new Color(139, 69, 19));
   add(fieldPanel, BorderLayout.CENTER);
+  
+  // Adding a Reset Button
+  resetButton = new JButton("Reset Game");
+  resetButton.setFont(new Font("Arial", Font.BOLD, 16));
+  add(resetButton, BorderLayout.SOUTH);
  }
 }
