@@ -22,5 +22,13 @@ public class GamePanel extends JPanel{
 	    // Drawing football field (green)
 	    g.setColor(Color.GREEN);
 	    g.fillRect(50, 50, getWidth() - 100, getHeight() - 100);
+	    
+	   // Drawing boundary lines 
+	    g.setColor(Color.WHITE); 
+	    g.drawRect(50, 50, getWidth() - 100, getHeight() - 100);
+
+	    // Drawing center line
+	    g.setColor(Color.WHITE); 
+	    g.drawLine(getWidth() / 2, 50, getWidth() / 2, getHeight() - 50);
 	}
 }
