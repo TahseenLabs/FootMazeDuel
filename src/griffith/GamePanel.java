@@ -14,4 +14,13 @@ public class GamePanel extends JPanel{
         setPreferredSize(new Dimension(800, 600));
         setBackground(new Color(139, 69, 19)); // Brown background
     }
+	
+	@Override
+	protected void paintComponent(Graphics g) {
+	    super.paintComponent(g);
+
+	    // Drawing football field (green)
+	    g.setColor(Color.GREEN);
+	    g.fillRect(50, 50, getWidth() - 100, getHeight() - 100);
+	}
 }
