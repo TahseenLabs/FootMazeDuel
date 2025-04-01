@@ -10,13 +10,23 @@ import java.awt.*;
 
 public class GamePanel extends JPanel{
 	
+	private JLabel scoreLabel;
+	
 	public GamePanel() {
         setPreferredSize(new Dimension(800, 600));
         setBackground(new Color(139, 69, 19)); // Brown background
-    }
-	
-	@Override
-	protected void paintComponent(Graphics g) {
+        setLayout(new BorderLayout());
+        
+        // Scoreboard at the top
+        scoreLabel = new JLabel("Striker: 0 | Defender: 0", SwingConstants.CENTER);
+        scoreLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        scoreLabel.setForeground(Color.WHITE);
+        add(scoreLabel, BorderLayout.NORTH);
+        
+    // Game field
+    JPanel fieldPanel = new JPanel() {
+	    @Override
+	    protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
 
 	    // Drawing football field (green)
@@ -48,5 +58,10 @@ public class GamePanel extends JPanel{
 	    g.setColor(Color.WHITE);
 	    g.fillRect(50, getHeight() / 2 - 50, 30, 100);  // Left goal post
 	    g.fillRect(getWidth() - 80, getHeight() / 2 - 50, 30, 100);  // Right goal post
-	}
+	 }
+  };
+  fieldPanel.setPreferredSize(new Dimension(800, 500));
+  fieldPanel.setBackground(new Color(139, 69, 19));
+  add(fieldPanel, BorderLayout.CENTER);
+ }
 }
