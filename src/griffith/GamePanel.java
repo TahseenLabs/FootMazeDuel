@@ -38,6 +38,15 @@ public class GamePanel extends JPanel{
 	    // Drawing center spot
 	    g.setColor(Color.WHITE); 
 	    g.fillOval(getWidth() / 2 - 5, getHeight() / 2 - 5, 10, 10);
+	    
+	   // Drawing goal areas
+	    g.setColor(Color.WHITE);
+	    g.fillRect(50, getHeight() / 2 - 100, 30, 200);  // Left goal area
+	    g.fillRect(getWidth() - 80, getHeight() / 2 - 100, 30, 200);  // Right goal area
 
+	    // Drawing goal posts
+	    g.setColor(Color.WHITE);
+	    g.fillRect(50, getHeight() / 2 - 50, 30, 100);  // Left goal post
+	    g.fillRect(getWidth() - 80, getHeight() / 2 - 50, 30, 100);  // Right goal post
 	}
 }
