@@ -6,20 +6,26 @@ package griffith;
  * Group Member-4: Komarovskyi Denys ; Student No. 3105289
  */
 import javax.swing.*;
-
-public class MainGame {
-	
-	public static void main(String[] args) {
+public class MainGame{
+    public static void main(String[] args) {
         JFrame frame = new JFrame("Football Maze Game");
-        frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setVisible(true);
         
-     // Adding Game Panel
-    	GamePanel panel = new GamePanel();
-    	frame.add(panel);
-    	frame.pack();
+        // Adding Game Panel
+        GamePanel panel = new GamePanel();
+        frame.add(panel);
+        frame.pack(); // Ensures the panel size fits before displaying
+        
+        frame.setLocationRelativeTo(null); // Center the window
+        frame.setVisible(true); // Show the frame
+        
+        // Ensure panel gets focus for key events
+        SwingUtilities.invokeLater(() -> {
+            panel.requestFocus();
+            panel.repaint();
+        });
+    }}
 
-	}
-}
+
+
