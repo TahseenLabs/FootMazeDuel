@@ -13,13 +13,15 @@ public class GamePanel extends JPanel{
     private JLabel scoreLabel;
     private JButton resetButton;
     private Defender defender;
+    private Striker striker;
     
     public GamePanel() {
         setPreferredSize(new Dimension(800, 600));
         setBackground(new Color(139, 69, 19)); // Brown background
         setLayout(new BorderLayout());
         
-        defender = new Defender(700, 250);
+        defender = new Defender(88, 250);
+        striker = new Striker(700, 250);
         
         // Scoreboard at the top
         scoreLabel = new JLabel("Striker: 0 | Defender: 0", SwingConstants.CENTER);
@@ -65,6 +67,7 @@ public class GamePanel extends JPanel{
                 
                 // Draw defender
                 defender.draw(g);
+                striker.draw(g);
             }
         };
         fieldPanel.setPreferredSize(new Dimension(800, 500));
@@ -77,13 +80,17 @@ public class GamePanel extends JPanel{
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    defender.move();
-                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    defender.moveRight();
-                }
+                if (e.getKeyCode() == KeyEvent.VK_UP)striker.move();
+                else if (e.getKeyCode() == KeyEvent.VK_DOWN) striker.moveRight();
+                
+                if (e.getKeyCode() == KeyEvent.VK_W) defender.move();
+                else if (e.getKeyCode() == KeyEvent.VK_S) defender.moveRight();
+
                 repaint();
             }
+            
+
+
         });
         
         // Adding a Reset Button
@@ -91,6 +98,7 @@ public class GamePanel extends JPanel{
         resetButton.setFont(new Font("Arial", Font.BOLD, 16));
         add(resetButton, BorderLayout.SOUTH);
     }
+    
 }  
 
 

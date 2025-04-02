@@ -10,14 +10,14 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-class Defender {
+class Striker {
     private int x, y;
     private final int WIDTH = 12;
     private final int HEIGHT = 50;
     private final int MOVE_SPEED = 5;
     private int direction = 1; // 1 for up, -1 for down;
     
-    public Defender(int startX, int startY) {
+    public Striker(int startX, int startY) {
         this.x = startX;
         this.y = startY;
     }
@@ -36,7 +36,7 @@ class Defender {
     }
     
     public void draw(Graphics g) {
-        g.setColor(Color.BLUE);
+        g.setColor(Color.RED);
         g.fillRect(x, y, WIDTH, HEIGHT);
     }
     
