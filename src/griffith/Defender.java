@@ -36,7 +36,7 @@ class Defender {
     }
     
     public void draw(Graphics g) {
-        g.setColor(Color.RED);
+        g.setColor(Color.YELLOW);
         g.fillRect(x, y, WIDTH, HEIGHT);
     }
     
