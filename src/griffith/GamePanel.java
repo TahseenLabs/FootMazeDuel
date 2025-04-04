@@ -9,7 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-public class GamePanel extends JPanel{
+
+public class GamePanel extends JPanel {
     private JLabel scoreLabel;
     private JButton resetButton;
     private Defender defender;
@@ -65,7 +66,7 @@ public class GamePanel extends JPanel{
                 g.fillRect(50, getHeight() / 2 - 50, 30, 100);  // Left goal post
                 g.fillRect(getWidth() - 80, getHeight() / 2 - 50, 30, 100);  // Right goal post
                 
-                // Draw defender
+                // Draw defender and striker
                 defender.draw(g);
                 striker.draw(g);
             }
@@ -76,21 +77,27 @@ public class GamePanel extends JPanel{
         
         // Adding Key Listener for Defender Movement
         setFocusable(true);
-        requestFocusInWindow();
+        requestFocusInWindow(); 
+        
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_UP)striker.move();
-                else if (e.getKeyCode() == KeyEvent.VK_DOWN) striker.moveRight();
-                
-                if (e.getKeyCode() == KeyEvent.VK_W) defender.move();
-                else if (e.getKeyCode() == KeyEvent.VK_S) defender.moveRight();
+                // Move the striker with UP and DOWN keys
+                if (e.getKeyCode() == KeyEvent.VK_UP) {
+                    striker.move(); // Move striker up
+                } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                    striker.moveRight(); // Move striker down
+                }
 
-                repaint();
+                // Move the defender with W and S keys
+                if (e.getKeyCode() == KeyEvent.VK_W) {
+                    defender.move(); // Move defender up
+                } else if (e.getKeyCode() == KeyEvent.VK_S) {
+                    defender.moveRight(); // Move defender down
+                }
+
+                repaint(); 
             }
-            
-
-
         });
         
         // Adding a Reset Button
@@ -98,7 +105,4 @@ public class GamePanel extends JPanel{
         resetButton.setFont(new Font("Arial", Font.BOLD, 16));
         add(resetButton, BorderLayout.SOUTH);
     }
-    
-}  
-
-
+}
