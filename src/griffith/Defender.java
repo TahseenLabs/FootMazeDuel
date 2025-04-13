@@ -7,28 +7,32 @@ package griffith;
  */
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 class Defender {
     private int x, y;
-    private final int WIDTH = 12;
-    private final int HEIGHT = 50;
+    private final int WIDTH = 300;
+    private final int HEIGHT = 300;
     private final int MOVE_SPEED = 5;
-    private int direction = 1; // 1 for up, -1 for down;
+    private int direction = 1; 
+    private Image defenderImage;
     
+    // Constructor to set the initial position of the defender
     public Defender(int startX, int startY) {
         this.x = startX;
         this.y = startY;
+        defenderImage = new ImageIcon("images/defender-img.png").getImage(); // Adding Defender's image
+
     }
     
+    // Method for vertical movement of the defender
     public void move() {
         y += MOVE_SPEED * direction;
-        if (y > 350) direction = -1;
-        if (y < 150) direction = 1;
+        if (y > 200) direction = -1;
+        if (y < 40) direction = 1;
         
     }
     
+    // Method to move the defender down (moving right in the vertical sense)
     public void moveRight() {
         if (y < 350) {
             y += MOVE_SPEED;
@@ -36,10 +40,10 @@ class Defender {
     }
     
     public void draw(Graphics g) {
-        g.setColor(Color.BLUE);
-        g.fillRect(x, y, WIDTH, HEIGHT);
+        g.drawImage(defenderImage, x, y, WIDTH, HEIGHT, null); // Drawing Defender's image
     }
     
+    // Getters for x and y coordinates
     public int getX() { return x; }
     public int getY() { return y; }
 }

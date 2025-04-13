@@ -7,39 +7,44 @@ package griffith;
  */
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 class Striker {
     private int x, y;
-    private final int WIDTH = 12;
-    private final int HEIGHT = 50;
+    private final int WIDTH = 300;
+    private final int HEIGHT = 300;
     private final int MOVE_SPEED = 5;
-    private int direction = 1; // 1 for up, -1 for down;
+    private int direction = 1;
+    private Image strikerImage;
     
+    // Constructor to set initial position of the Striker
     public Striker(int startX, int startY) {
         this.x = startX;
         this.y = startY;
+        strikerImage = new ImageIcon("images/striker-img.png").getImage(); // Adding Striker's image
+
     }
     
+    // Method for vertical movement of the striker
     public void move() {
         y += MOVE_SPEED * direction;
-        if (y > 350) direction = -1;
-        if (y < 150) direction = 1;
-        
+        if (y > 200) direction = -1;
+        if (y < 40) direction = 1;
     }
     
+    // Method to move the striker down (moving right in the vertical sense)
     public void moveRight() {
         if (y < 350) {
             y += MOVE_SPEED;
         }
     }
     
+    // Method to draw Striker's image
     public void draw(Graphics g) {
-        g.setColor(Color.RED);
-        g.fillRect(x, y, WIDTH, HEIGHT);
+        g.drawImage(strikerImage, x, y, WIDTH, HEIGHT, null); // Drawing Striker's image
+
     }
     
+    // Getters for x and y coordinates
     public int getX() { return x; }
     public int getY() { return y; }
 }

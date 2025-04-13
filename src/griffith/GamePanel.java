@@ -22,8 +22,8 @@ public class GamePanel extends JPanel {
         setBackground(new Color(139, 69, 19)); // Brown background
         setLayout(new BorderLayout());
         
-        defender = new Defender(88, 250);
-        striker = new Striker(700, 250);
+        striker = new Striker(-15, 120); // Striker positioned near the left side of the football
+        defender = new Defender(515, 120); // Defender positioned near the right side of the football
         football = new Football(370, 225); // Centered football near the middle
         
         // Scoreboard at the top
@@ -46,59 +46,40 @@ public class GamePanel extends JPanel {
                 g.setColor(Color.WHITE); 
                 g.drawRect(50, 50, getWidth() - 100, getHeight() - 100);
                 
-                // Drawing center line
-                g.setColor(Color.WHITE); 
+                // Center line and circle
                 g.drawLine(getWidth() / 2, 50, getWidth() / 2, getHeight() - 50);
-                
-                // Drawing center circle
-                g.setColor(Color.WHITE);
                 g.drawOval(getWidth() / 2 - 50, getHeight() / 2 - 50, 100, 100);
-                
-                // Drawing center spot
-                g.setColor(Color.WHITE); 
                 g.fillOval(getWidth() / 2 - 5, getHeight() / 2 - 5, 10, 10);
                 
-                // Drawing goal areas
-                g.setColor(Color.WHITE);
-                g.fillRect(50, getHeight() / 2 - 100, 30, 200);  // Left goal area
-                g.fillRect(getWidth() - 80, getHeight() / 2 - 100, 30, 200);  // Right goal area
+                // Goal areas (left and right)
+                g.fillRect(50, getHeight() / 2 - 100, 30, 200);              // Left goal
+                g.fillRect(getWidth() - 80, getHeight() / 2 - 100, 30, 200); // Right goal
+                g.fillRect(50, getHeight() / 2 - 50, 30, 100);               // Left post
+                g.fillRect(getWidth() - 80, getHeight() / 2 - 50, 30, 100);  // Right post
                 
-                // Drawing goal posts
-                g.setColor(Color.WHITE);
-                g.fillRect(50, getHeight() / 2 - 50, 30, 100);  // Left goal post
-                g.fillRect(getWidth() - 80, getHeight() / 2 - 50, 30, 100);  // Right goal post
-                
-                // Draw defender and striker
-                defender.draw(g);
-                striker.draw(g);
-                football.draw(g, this); // Drawing the football
+                // Drawing Game Objects
+                defender.draw(g); // Drawing defender
+                striker.draw(g); // Drawing striker
+                football.draw(g, this); // Drawing football
             }
         };
         fieldPanel.setPreferredSize(new Dimension(800, 500));
         fieldPanel.setBackground(new Color(139, 69, 19));
         add(fieldPanel, BorderLayout.CENTER);
         
-        // Adding Key Listener for Defender Movement
+        // Adding Key Listener for movement
         setFocusable(true);
         requestFocusInWindow(); 
         
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                // Move the striker with UP and DOWN keys
-                if (e.getKeyCode() == KeyEvent.VK_UP) {
-                    striker.move(); // Move striker up
-                } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    striker.moveRight(); // Move striker down
+            	switch (e.getKeyCode()) {
+                case KeyEvent.VK_UP -> striker.move();        // Up Arrow
+                case KeyEvent.VK_DOWN -> striker.moveRight(); // Down Arrow
+                case KeyEvent.VK_W -> defender.move();        // W
+                case KeyEvent.VK_S -> defender.moveRight();   // S
                 }
-
-                // Move the defender with W and S keys
-                if (e.getKeyCode() == KeyEvent.VK_W) {
-                    defender.move(); // Move defender up
-                } else if (e.getKeyCode() == KeyEvent.VK_S) {
-                    defender.moveRight(); // Move defender down
-                }
-
                 repaint(); 
             }
         });
