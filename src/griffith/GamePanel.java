@@ -15,6 +15,7 @@ public class GamePanel extends JPanel {
     private JButton resetButton;
     private Defender defender;
     private Striker striker;
+    private Football football;
     
     public GamePanel() {
         setPreferredSize(new Dimension(800, 600));
@@ -23,6 +24,7 @@ public class GamePanel extends JPanel {
         
         defender = new Defender(88, 250);
         striker = new Striker(700, 250);
+        football = new Football(370, 225); // Centered football near the middle
         
         // Scoreboard at the top
         scoreLabel = new JLabel("Striker: 0 | Defender: 0", SwingConstants.CENTER);
@@ -69,6 +71,7 @@ public class GamePanel extends JPanel {
                 // Draw defender and striker
                 defender.draw(g);
                 striker.draw(g);
+                football.draw(g, this); // Drawing the football
             }
         };
         fieldPanel.setPreferredSize(new Dimension(800, 500));
