@@ -21,7 +21,6 @@ class Defender {
         this.x = startX;
         this.y = startY;
         defenderImage = new ImageIcon("images/defender-img.png").getImage(); // Adding Defender's image
-
     }
     
     // Method for vertical movement of the defender
@@ -29,7 +28,6 @@ class Defender {
         y += MOVE_SPEED * direction;
         if (y > 200) direction = -1;
         if (y < 40) direction = 1;
-        
     }
     
     // Method to move the defender down (moving right in the vertical sense)
