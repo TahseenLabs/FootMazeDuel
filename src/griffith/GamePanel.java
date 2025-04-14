@@ -93,11 +93,6 @@ public class GamePanel extends JPanel {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-            	 // Start ball movement on any key press if not already moving
-                if (!footballMoving) {
-                    footballTimer.start();
-                    footballMoving = true;
-                }
 
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_W -> striker.move(); // Move striker up
@@ -120,8 +115,12 @@ public class GamePanel extends JPanel {
     
     // Resets the players to initial positions
     private void resetGame() {
-        striker = new Striker(-15, 120);
-        defender = new Defender(515, 120);
+        striker.setY(280);
+        defender.setY(250);
+        football.resetPosition();
+        football.setMoving(false);
+        footballTimer.stop();
+        footballMoving = false;
         requestFocusInWindow();
         repaint();
     }
