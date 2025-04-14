@@ -69,7 +69,20 @@ public class GamePanel extends JPanel {
         // Football movement timer
         footballTimer = new Timer(20, e -> {
             football.move();
-            repaint();
+            if (football.getX() + 20 >= defender.getX()) {
+                footballTimer.stop();
+                footballMoving = false;
+
+                if (football.getY() >= defender.getY() && football.getY() <= defender.getY() + defender.getHeight()) {
+                    JOptionPane.showMessageDialog(this, "SAVED by the Defender!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "GOAL!");
+                }
+
+                football.resetPosition();
+                football.setMoving(false);
+            }
+ repaint();
         });
 
         // Adding Key Listener for movement
