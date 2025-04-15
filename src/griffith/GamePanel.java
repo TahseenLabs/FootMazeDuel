@@ -147,7 +147,7 @@ public class GamePanel extends JPanel {
   
 
     private void resetGame() {
-        striker.setY(280);
+        striker.reset();  // Use this instead of setY(280)
         defender.setY(250);
         football.resetPosition();
         football.setMoving(false);
