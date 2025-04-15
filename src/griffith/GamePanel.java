@@ -14,7 +14,12 @@ public class GamePanel extends JPanel {
     private Goal goalTracker;
 
     private boolean footballMoving = false;
-
+    private boolean awaitingNextRound = false;
+    private boolean enterKeyLock = false;
+    private String statusMessage = "";
+    private Timer delayTimer;
+    private boolean canStartNextRound = false;
+    
     public GamePanel() {
         setPreferredSize(new Dimension(800, 600));
         setBackground(new Color(139, 69, 19));
@@ -51,6 +56,16 @@ public class GamePanel extends JPanel {
                 defender.draw(g);
                 striker.draw(g);
                 football.draw(g, this);
+
+                // Draw message if needed
+                if (!statusMessage.isEmpty()) {
+                    g.setFont(new Font("Arial", Font.BOLD, 40));
+                    g.setColor(Color.YELLOW);
+                    FontMetrics fm = g.getFontMetrics();
+                    int msgWidth = fm.stringWidth(statusMessage);
+                    int msgHeight = fm.getHeight();
+                    g.drawString(statusMessage, (getWidth() - msgWidth) / 2, getHeight() / 2 + msgHeight / 2);
+                }
             }
         };
 
@@ -66,15 +81,22 @@ public class GamePanel extends JPanel {
 
                 if (football.getY() >= defender.getY() && football.getY() <= defender.getY() + defender.getHeight()) {
                     goalTracker.defenderSaved();
-                    JOptionPane.showMessageDialog(this, "SAVED by the Defender!");
+                    statusMessage = "SAVED by the Defender!";
                 } else {
                     goalTracker.strikerScored();
-                    JOptionPane.showMessageDialog(this, "GOAL!");
+                    statusMessage = "GOAL!";
                 }
 
                 scoreLabel.setText(goalTracker.getScoreText());
+
                 football.resetPosition();
                 football.setMoving(false);
+
+                striker.setY(280);
+                defender.setY(250);
+
+                awaitingNextRound = true;
+                repaint();
             }
             repaint();
         });
@@ -85,20 +107,35 @@ public class GamePanel extends JPanel {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_W -> striker.move(); // up
-                    case KeyEvent.VK_S -> striker.moveRight(); // down
-                    case KeyEvent.VK_UP -> defender.moveUp();// up
-                    case KeyEvent.VK_DOWN -> defender.moveRight(); // down
-                    case KeyEvent.VK_ENTER -> {
-                        if (!footballMoving) {
-                            football.setMoving(true);
-                            footballTimer.start();
-                            footballMoving = true;
-                        }
+                if (e.getKeyCode() == KeyEvent.VK_ENTER && !enterKeyLock) {
+                    enterKeyLock = true;
+                    if (awaitingNextRound) {
+                        statusMessage = "";
+                        awaitingNextRound = false;
+                        repaint();
+                    } else if (!footballMoving) {
+                        football.setMoving(true);
+                        footballTimer.start();
+                        footballMoving = true;
                     }
                 }
-                repaint();
+
+                if (!awaitingNextRound) {
+                    switch (e.getKeyCode()) {
+                        case KeyEvent.VK_W -> striker.move();
+                        case KeyEvent.VK_S -> striker.moveRight();
+                        case KeyEvent.VK_UP -> defender.moveUp();
+                        case KeyEvent.VK_DOWN -> defender.moveRight();
+                    }
+                    repaint();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    enterKeyLock = false;
+                }
             }
         });
 
@@ -116,12 +153,10 @@ public class GamePanel extends JPanel {
         footballTimer.stop();
         footballMoving = false;
         goalTracker.reset();
+        statusMessage = "";
+        awaitingNextRound = false;
         scoreLabel.setText(goalTracker.getScoreText());
         requestFocusInWindow();
         repaint();
-        
-       
-        
-
     }
 }
