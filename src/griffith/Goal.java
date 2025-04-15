@@ -7,4 +7,38 @@ package griffith;
  */
 public class Goal {
 
-}
+	    private int strikerGoals;
+	    private int defenderSaves;
+
+	    public Goal() {
+	        strikerGoals = 0;
+	        defenderSaves = 0;
+	    }
+
+	    public void strikerScored() {
+	        strikerGoals++;
+	    }
+
+	    public void defenderSaved() {
+	        defenderSaves++;
+	    }
+
+	    public int getStrikerGoals() {
+	        return strikerGoals;
+	    }
+
+	    public int getDefenderSaves() {
+	        return defenderSaves;
+	    }
+
+	    public void reset() {
+	        strikerGoals = 0;
+	        defenderSaves = 0;
+	    }
+
+	    public String getScoreText() {
+	        return "Striker: " + strikerGoals + " | Defender: " + defenderSaves;
+	    }
+	}
+
+
