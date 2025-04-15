@@ -88,7 +88,7 @@ public class GamePanel extends JPanel {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_W -> striker.move(); // up
                     case KeyEvent.VK_S -> striker.moveRight(); // down
-                    case KeyEvent.VK_UP -> defender.move(); // up
+                    case KeyEvent.VK_UP -> defender.moveUp();// up
                     case KeyEvent.VK_DOWN -> defender.moveRight(); // down
                     case KeyEvent.VK_ENTER -> {
                         if (!footballMoving) {
@@ -119,5 +119,9 @@ public class GamePanel extends JPanel {
         scoreLabel.setText(goalTracker.getScoreText());
         requestFocusInWindow();
         repaint();
+        
+       
+        
+
     }
 }

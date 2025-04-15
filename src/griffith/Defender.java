@@ -40,7 +40,6 @@ public class Defender {
     }
 
 	public Object moveRight() {
-		// TODO Auto-generated method stub
 		return null;
 	
 	
