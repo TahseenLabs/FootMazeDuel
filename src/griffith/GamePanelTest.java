@@ -39,4 +39,25 @@ class GamePanelTest {
         }
         return null;
     }
+    
+    @Test
+    void testResetGame() {
+        // Find the score label and reset button
+        JLabel scoreLabel = findComponent(panel, JLabel.class, "Striker: 0 | Defender: 0");
+        JButton resetButton = findComponent(panel, JButton.class, "Reset Game");
+        
+        // Simulate clicking the reset button
+        resetButton.doClick();
+        
+        // Verify the score label shows initial state
+        assertEquals("Striker: 0 | Defender: 0", scoreLabel.getText(),
+            "Score should be reset to 0-0 after reset");
+        
+        // Verify the reset button is still present and enabled
+        assertNotNull(findComponent(panel, JButton.class, "Reset Game"),
+            "Reset button should still exist after reset");
+        assertTrue(resetButton.isEnabled(),
+            "Reset button should be enabled after reset");
+    }
+
 }

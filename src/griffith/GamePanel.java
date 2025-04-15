@@ -145,7 +145,6 @@ public class GamePanel extends JPanel {
         add(resetButton, BorderLayout.SOUTH);
     }
   
-
     private void resetGame() {
         striker.reset();  // Use this instead of setY(280)
         defender.setY(250);

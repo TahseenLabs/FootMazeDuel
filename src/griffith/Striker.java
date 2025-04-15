@@ -48,7 +48,9 @@ class Striker {
     public int getX() { return x; }
     public int getY() { return y; }
 
-	
+	public void setY(int y) {
+		this.y = 280;
+	}
 	  public void reset() {
 	        this.y = 280;  // Resets to initial Y position
 	        this.direction = 1;  // Resets movement direction
