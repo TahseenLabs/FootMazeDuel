@@ -144,6 +144,7 @@ public class GamePanel extends JPanel {
         resetButton.addActionListener(e -> resetGame());
         add(resetButton, BorderLayout.SOUTH);
     }
+  
 
     private void resetGame() {
         striker.setY(280);
@@ -159,4 +160,6 @@ public class GamePanel extends JPanel {
         requestFocusInWindow();
         repaint();
     }
+    
+    
 }
