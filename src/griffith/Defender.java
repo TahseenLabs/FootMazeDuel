@@ -1,47 +1,48 @@
 package griffith;
-/*
- * Group Member-1: Olimeh kelvin     ; Student No. 3112489
- * Group Member-2: Tahseen Ahmad     ; Student No. 3135743
- * Group Member-3: Francis Ngonadi   ; Student No. 3138335
- * Group Member-4: Komarovskyi Denys ; Student No. 3105289
- */
-import javax.swing.*;
+
 import java.awt.*;
 
-class Defender {
+public class Defender {
     private int x, y;
-    private final int WIDTH = 300;
-    private final int HEIGHT = 300;
-    private final int MOVE_SPEED = 5;
-    private int direction = 1; 
-    private Image defenderImage;
-    
-    // Constructor to set the initial position of the defender
-    public Defender(int startX, int startY) {
-        this.x = startX;
-        this.y = startY;
-        defenderImage = new ImageIcon("images/defender-img.png").getImage(); // Adding Defender's image
+
+    public Defender(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
-    
-    // Method for vertical movement of the defender
-    public void move() {
-        y += MOVE_SPEED * direction;
-        if (y > 200) direction = -1;
-        if (y < 40) direction = 1;
+
+    public void moveUp() {
+        if (y > 60) y -= 15;
     }
-    
-    // Method to move the defender down (moving right in the vertical sense)
-    public void moveRight() {
-        if (y < 350) {
-            y += MOVE_SPEED;
-        }
+
+    public void moveDown() {
+        if (y < 440) y += 15;
     }
-    
+
     public void draw(Graphics g) {
-        g.drawImage(defenderImage, x, y, WIDTH, HEIGHT, null); // Drawing Defender's image
+        g.setColor(Color.RED);
+        g.fillRect(x, y, 30, 80);
     }
-    
-    // Getters for x and y coordinates
-    public int getX() { return x; }
-    public int getY() { return y; }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getHeight() {
+        return 80;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+	public Object moveRight() {
+		// TODO Auto-generated method stub
+		return null;
+	
+	
+	}
 }

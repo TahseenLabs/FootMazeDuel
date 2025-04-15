@@ -47,4 +47,9 @@ class Striker {
     // Getters for x and y coordinates
     public int getX() { return x; }
     public int getY() { return y; }
+
+	public void setY(int i) {
+		// TODO Auto-generated method stub
+		
+	}
 }

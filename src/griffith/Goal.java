@@ -11,8 +11,9 @@ public class Goal {
 	    private int defenderSaves;
 
 	    public Goal() {
-	        strikerGoals = 0;
-	        defenderSaves = 0;
+	        this.strikerGoals = 0;
+	        this.defenderSaves = 0;
+
 	    }
 
 	    public void strikerScored() {
@@ -38,6 +39,8 @@ public class Goal {
 
 	    public String getScoreText() {
 	        return "Striker: " + strikerGoals + " | Defender: " + defenderSaves;
+	       
+
 	    }
 	}
 

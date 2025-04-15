@@ -5,13 +5,13 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class GamePanel extends JPanel {
-    private JLabel scoreLabel; // Displays scores
-    private JButton resetButton; // Button to reset the game
-    private Defender defender; // Defender player
-    private Striker striker; // Striker player
-    private Football football; // Football object
-    private Timer footballTimer; // Timer for ball movement
-    private Goal goalTracker; // Tracks goals and saves
+    private JLabel scoreLabel;
+    private JButton resetButton;
+    private Defender defender;
+    private Striker striker;
+    private Football football;
+    private Timer footballTimer;
+    private Goal goalTracker;
 
     private boolean footballMoving = false;
 
@@ -20,10 +20,10 @@ public class GamePanel extends JPanel {
         setBackground(new Color(139, 69, 19));
         setLayout(new BorderLayout());
 
-        striker = new Striker(-15, 120);
-        defender = new Defender(515, 120);
+        striker = new Striker(-15, 280);
+        defender = new Defender(700, 250);
         football = new Football(165, 280);
-        goalTracker = new Goal(); // Initialize Goal tracker
+        goalTracker = new Goal();
 
         scoreLabel = new JLabel(goalTracker.getScoreText(), SwingConstants.CENTER);
         scoreLabel.setFont(new Font("Arial", Font.BOLD, 20));
@@ -44,10 +44,9 @@ public class GamePanel extends JPanel {
                 g.drawOval(getWidth() / 2 - 50, getHeight() / 2 - 50, 100, 100);
                 g.fillOval(getWidth() / 2 - 5, getHeight() / 2 - 5, 10, 10);
 
+                // Goals
                 g.fillRect(50, getHeight() / 2 - 100, 30, 200);
                 g.fillRect(getWidth() - 80, getHeight() / 2 - 100, 30, 200);
-                g.fillRect(50, getHeight() / 2 - 50, 30, 100);
-                g.fillRect(getWidth() - 80, getHeight() / 2 - 50, 30, 100);
 
                 defender.draw(g);
                 striker.draw(g);
@@ -87,8 +86,10 @@ public class GamePanel extends JPanel {
             @Override
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
-                    case KeyEvent.VK_W -> striker.move(); // Move striker up
-                    case KeyEvent.VK_S -> striker.moveRight(); // Move striker down
+                    case KeyEvent.VK_W -> striker.move(); // up
+                    case KeyEvent.VK_S -> striker.moveRight(); // down
+                    case KeyEvent.VK_UP -> defender.move(); // up
+                    case KeyEvent.VK_DOWN -> defender.moveRight(); // down
                     case KeyEvent.VK_ENTER -> {
                         if (!footballMoving) {
                             football.setMoving(true);
@@ -96,8 +97,6 @@ public class GamePanel extends JPanel {
                             footballMoving = true;
                         }
                     }
-                    case KeyEvent.VK_UP -> defender.moveUp(); // Move defender up
-                    case KeyEvent.VK_DOWN -> defender.moveRight(); // Move defender down
                 }
                 repaint();
             }
@@ -112,12 +111,12 @@ public class GamePanel extends JPanel {
     private void resetGame() {
         striker.setY(280);
         defender.setY(250);
-        football.reset();
-        football.moveWithStriker(ABORT);;
+        football.resetPosition();
+        football.setMoving(false);
         footballTimer.stop();
         footballMoving = false;
-        goalTracker.reset(); // Reset scores
-        scoreLabel.setText(goalTracker.getScoreText()); // Update label
+        goalTracker.reset();
+        scoreLabel.setText(goalTracker.getScoreText());
         requestFocusInWindow();
         repaint();
     }
