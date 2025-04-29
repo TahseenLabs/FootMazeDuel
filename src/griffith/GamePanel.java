@@ -40,33 +40,43 @@ public class GamePanel extends JPanel {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
+                // Draw green field
                 g.setColor(Color.GREEN);
                 g.fillRect(50, 50, getWidth() - 100, getHeight() - 100);
 
+                // Set white color for all markings
                 g.setColor(Color.WHITE);
-                // Outer boundary
+                
+                // Field boundary
                 g.drawRect(50, 50, getWidth() - 100, getHeight() - 100);
+                
                 // Center line
                 g.drawLine(getWidth() / 2, 50, getWidth() / 2, getHeight() - 50);
+                
                 // Center circle
                 g.drawOval(getWidth() / 2 - 50, getHeight() / 2 - 50, 100, 100);
-                // Center spot
                 g.fillOval(getWidth() / 2 - 5, getHeight() / 2 - 5, 10, 10);
 
-                // Goals and penalty areas
-                // Left goal (x=50)
-                g.fillRect(50, getHeight() / 2 - 100, 30, 200);
-                // Left 18-yard box (extends 162 pixels from goal line - 18 yards in scale)
-                g.drawRect(50, getHeight() / 2 - 162, 162, 324);
-                // Left 6-yard box (extends 54 pixels from goal line - 6 yards in scale)
-                g.drawRect(50, getHeight() / 2 - 54, 54, 108);
+                // Penalty areas (unchanged)
+                int sixYardDepth = 54;
+                int sixYardWidth = 108;
+                int eighteenYardDepth = 162;
+                int eighteenYardWidth = 324;
+
+                // Left penalty area
+                g.drawRect(50, getHeight() / 2 - eighteenYardWidth/2, eighteenYardDepth, eighteenYardWidth);
+                g.drawRect(50, getHeight() / 2 - sixYardWidth/2, sixYardDepth, sixYardWidth);
                 
-                // Right goal (x=getWidth()-80)
-                g.fillRect(getWidth() - 80, getHeight() / 2 - 100, 30, 200);
-                // Right 18-yard box
-                g.drawRect(getWidth() - 80 - 162, getHeight() / 2 - 162, 162, 324);
-                // Right 6-yard box
-                g.drawRect(getWidth() - 80 - 54, getHeight() / 2 - 54, 54, 108);
+                // Right penalty area
+                g.drawRect(getWidth() - 80 - eighteenYardDepth, getHeight() / 2 - eighteenYardWidth/2, eighteenYardDepth, eighteenYardWidth);
+                g.drawRect(getWidth() - 80 - sixYardDepth, getHeight() / 2 - sixYardWidth/2, sixYardDepth, sixYardWidth);
+
+                // Draw corner arcs and flags
+                drawCornerArcsAndFlags(g);
+
+                // Simple goalposts (just white rectangles)
+                g.fillRect(50, getHeight() / 2 - 100, 30, 200); // Left goal
+                g.fillRect(getWidth() - 80, getHeight() / 2 - 100, 30, 200); // Right goal
 
                 defender.draw(g);
                 striker.draw(g);
@@ -82,36 +92,37 @@ public class GamePanel extends JPanel {
                     g.drawString(statusMessage, (getWidth() - msgWidth) / 2, getHeight() / 2 + msgHeight / 2);
                 }
             }
-                private void drawCornerArcsAndFlags(Graphics g) {
-                    int cornerArcSize = 20;
-                    int flagSize = 15;
-                    
-                    // Four corners of the field
-                    Point[] corners = {
-                        new Point(50, 50), // Top-left
-                        new Point(getWidth() - 50, 50), // Top-right
-                        new Point(50, getHeight() - 50), // Bottom-left
-                        new Point(getWidth() - 50, getHeight() - 50) // Bottom-right
-                    };
 
-                    // Draw corner arcs and flags
-                    for (Point corner : corners) {
-                        // Draw corner arc
-                        g.drawArc(corner.x - cornerArcSize, corner.y - cornerArcSize, 
-                                 cornerArcSize * 2, cornerArcSize * 2, 0, 90);
-                        
-                        // Draw flag (triangle on a pole)
-                        g.setColor(Color.WHITE);
-                        // Flag pole
-                        g.drawLine(corner.x, corner.y, corner.x, corner.y - flagSize * 2);
-                        // Flag (colored triangle)
-                        g.setColor(Color.RED);
-                        int[] xPoints = {corner.x, corner.x, corner.x + flagSize};
-                        int[] yPoints = {corner.y - flagSize * 2, corner.y - flagSize, corner.y - flagSize * 2};
-                        g.fillPolygon(xPoints, yPoints, 3);
-                    }
+            private void drawCornerArcsAndFlags(Graphics g) {
+                int cornerArcSize = 20;
+                int flagSize = 15;
+                
+                // Four corners of the field
+                Point[] corners = {
+                    new Point(50, 50), // Top-left
+                    new Point(getWidth() - 50, 50), // Top-right
+                    new Point(50, getHeight() - 50), // Bottom-left
+                    new Point(getWidth() - 50, getHeight() - 50) // Bottom-right
+                };
+
+                // Draw corner arcs and flags
+                for (Point corner : corners) {
+                    // Draw corner arc
+                    g.drawArc(corner.x - cornerArcSize, corner.y - cornerArcSize, 
+                             cornerArcSize * 2, cornerArcSize * 2, 0, 90);
+                    
+                    // Draw flag (triangle on a pole)
+                    g.setColor(Color.WHITE);
+                    // Flag pole
+                    g.drawLine(corner.x, corner.y, corner.x, corner.y - flagSize * 2);
+                    // Flag (colored triangle)
+                    g.setColor(Color.RED);
+                    int[] xPoints = {corner.x, corner.x, corner.x + flagSize};
+                    int[] yPoints = {corner.y - flagSize * 2, corner.y - flagSize, corner.y - flagSize * 2};
+                    g.fillPolygon(xPoints, yPoints, 3);
                 }
-    };
+            }
+        };
         fieldPanel.setPreferredSize(new Dimension(800, 500));
         fieldPanel.setBackground(new Color(139, 69, 19));
         add(fieldPanel, BorderLayout.CENTER);
