@@ -94,7 +94,7 @@ public class GamePanel extends JPanel {
             }
 
             private void drawCornerArcsAndFlags(Graphics g) {
-                int cornerArcSize = 20;
+               // int cornerArcSize = 20;
                 int flagSize = 15;
                 
                 // Four corners of the field (adjusted to be inside boundaries)
@@ -108,8 +108,8 @@ public class GamePanel extends JPanel {
                 // Draw corner arcs and flags
                 for (Point corner : corners) {
                     // Draw corner arc (now properly inside the field)
-                    g.drawArc(corner.x, corner.y, 
-                             cornerArcSize * 2, cornerArcSize * 2, 90, 90);
+                    //g.drawArc(corner.x, corner.y, 
+                      //       cornerArcSize * 2, cornerArcSize * 2, 90, 90);
                     
                     // Draw flag (adjusted positions)
                     g.setColor(Color.WHITE);
@@ -121,7 +121,7 @@ public class GamePanel extends JPanel {
                         g.drawLine(poleX, poleY, poleX, poleY - flagSize * 2);
                         // Flag (pointing outward)
                         g.setColor(Color.RED);
-                        int[] xPoints = {poleX, poleX, poleX - flagSize};
+                        int[] xPoints = {poleX, poleX, poleX + flagSize};
                         int[] yPoints = {poleY - flagSize * 2, poleY - flagSize, poleY - flagSize * 2};
                         g.fillPolygon(xPoints, yPoints, 3);
                     } else { // Right side
@@ -129,12 +129,13 @@ public class GamePanel extends JPanel {
                         g.drawLine(poleX, poleY, poleX, poleY - flagSize * 2);
                         // Flag (pointing outward)
                         g.setColor(Color.RED);
-                        int[] xPoints = {poleX, poleX, poleX + flagSize};
+                        int[] xPoints = {poleX, poleX, poleX - flagSize};
                         int[] yPoints = {poleY - flagSize * 2, poleY - flagSize, poleY - flagSize * 2};
                         g.fillPolygon(xPoints, yPoints, 3);
                     }
-                }
-            }
+                    
+                    
+                }}
         };
         fieldPanel.setPreferredSize(new Dimension(800, 500));
         fieldPanel.setBackground(new Color(139, 69, 19));
@@ -227,5 +228,5 @@ public class GamePanel extends JPanel {
         repaint();
     }
     
-    
+         
 }
