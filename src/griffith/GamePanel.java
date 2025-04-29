@@ -53,16 +53,20 @@ public class GamePanel extends JPanel {
                 // Center spot
                 g.fillOval(getWidth() / 2 - 5, getHeight() / 2 - 5, 10, 10);
 
-                // Goals and 18-yard boxes
+                // Goals and penalty areas
                 // Left goal (x=50)
                 g.fillRect(50, getHeight() / 2 - 100, 30, 200);
                 // Left 18-yard box (extends 162 pixels from goal line - 18 yards in scale)
                 g.drawRect(50, getHeight() / 2 - 162, 162, 324);
+                // Left 6-yard box (extends 54 pixels from goal line - 6 yards in scale)
+                g.drawRect(50, getHeight() / 2 - 54, 54, 108);
                 
                 // Right goal (x=getWidth()-80)
                 g.fillRect(getWidth() - 80, getHeight() / 2 - 100, 30, 200);
                 // Right 18-yard box
                 g.drawRect(getWidth() - 80 - 162, getHeight() / 2 - 162, 162, 324);
+                // Right 6-yard box
+                g.drawRect(getWidth() - 80 - 54, getHeight() / 2 - 54, 54, 108);
 
                 defender.draw(g);
                 striker.draw(g);
