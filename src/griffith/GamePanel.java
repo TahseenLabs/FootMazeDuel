@@ -44,14 +44,25 @@ public class GamePanel extends JPanel {
                 g.fillRect(50, 50, getWidth() - 100, getHeight() - 100);
 
                 g.setColor(Color.WHITE);
+                // Outer boundary
                 g.drawRect(50, 50, getWidth() - 100, getHeight() - 100);
+                // Center line
                 g.drawLine(getWidth() / 2, 50, getWidth() / 2, getHeight() - 50);
+                // Center circle
                 g.drawOval(getWidth() / 2 - 50, getHeight() / 2 - 50, 100, 100);
+                // Center spot
                 g.fillOval(getWidth() / 2 - 5, getHeight() / 2 - 5, 10, 10);
 
-                // Goals
+                // Goals and 18-yard boxes
+                // Left goal (x=50)
                 g.fillRect(50, getHeight() / 2 - 100, 30, 200);
+                // Left 18-yard box (extends 162 pixels from goal line - 18 yards in scale)
+                g.drawRect(50, getHeight() / 2 - 162, 162, 324);
+                
+                // Right goal (x=getWidth()-80)
                 g.fillRect(getWidth() - 80, getHeight() / 2 - 100, 30, 200);
+                // Right 18-yard box
+                g.drawRect(getWidth() - 80 - 162, getHeight() / 2 - 162, 162, 324);
 
                 defender.draw(g);
                 striker.draw(g);
@@ -68,7 +79,6 @@ public class GamePanel extends JPanel {
                 }
             }
         };
-
         fieldPanel.setPreferredSize(new Dimension(800, 500));
         fieldPanel.setBackground(new Color(139, 69, 19));
         add(fieldPanel, BorderLayout.CENTER);
