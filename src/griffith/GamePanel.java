@@ -97,7 +97,7 @@ public class GamePanel extends JPanel {
                 int cornerArcSize = 20;
                 int flagSize = 15;
                 
-                // Four corners of the field
+                // Four corners of the field (adjusted to be inside boundaries)
                 Point[] corners = {
                     new Point(50, 50), // Top-left
                     new Point(getWidth() - 50, 50), // Top-right
@@ -107,19 +107,32 @@ public class GamePanel extends JPanel {
 
                 // Draw corner arcs and flags
                 for (Point corner : corners) {
-                    // Draw corner arc
-                    g.drawArc(corner.x - cornerArcSize, corner.y - cornerArcSize, 
-                             cornerArcSize * 2, cornerArcSize * 2, 0, 90);
+                    // Draw corner arc (now properly inside the field)
+                    g.drawArc(corner.x, corner.y, 
+                             cornerArcSize * 2, cornerArcSize * 2, 90, 90);
                     
-                    // Draw flag (triangle on a pole)
+                    // Draw flag (adjusted positions)
                     g.setColor(Color.WHITE);
-                    // Flag pole
-                    g.drawLine(corner.x, corner.y, corner.x, corner.y - flagSize * 2);
-                    // Flag (colored triangle)
-                    g.setColor(Color.RED);
-                    int[] xPoints = {corner.x, corner.x, corner.x + flagSize};
-                    int[] yPoints = {corner.y - flagSize * 2, corner.y - flagSize, corner.y - flagSize * 2};
-                    g.fillPolygon(xPoints, yPoints, 3);
+                    // Flag pole (positioned at corner point)
+                    int poleX = corner.x;
+                    int poleY = corner.y;
+                    if (corner.x == 50) { // Left side
+                        poleX += 2; // Slightly inside
+                        g.drawLine(poleX, poleY, poleX, poleY - flagSize * 2);
+                        // Flag (pointing outward)
+                        g.setColor(Color.RED);
+                        int[] xPoints = {poleX, poleX, poleX - flagSize};
+                        int[] yPoints = {poleY - flagSize * 2, poleY - flagSize, poleY - flagSize * 2};
+                        g.fillPolygon(xPoints, yPoints, 3);
+                    } else { // Right side
+                        poleX -= 2; // Slightly inside
+                        g.drawLine(poleX, poleY, poleX, poleY - flagSize * 2);
+                        // Flag (pointing outward)
+                        g.setColor(Color.RED);
+                        int[] xPoints = {poleX, poleX, poleX + flagSize};
+                        int[] yPoints = {poleY - flagSize * 2, poleY - flagSize, poleY - flagSize * 2};
+                        g.fillPolygon(xPoints, yPoints, 3);
+                    }
                 }
             }
         };
