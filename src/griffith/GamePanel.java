@@ -82,7 +82,36 @@ public class GamePanel extends JPanel {
                     g.drawString(statusMessage, (getWidth() - msgWidth) / 2, getHeight() / 2 + msgHeight / 2);
                 }
             }
-        };
+                private void drawCornerArcsAndFlags(Graphics g) {
+                    int cornerArcSize = 20;
+                    int flagSize = 15;
+                    
+                    // Four corners of the field
+                    Point[] corners = {
+                        new Point(50, 50), // Top-left
+                        new Point(getWidth() - 50, 50), // Top-right
+                        new Point(50, getHeight() - 50), // Bottom-left
+                        new Point(getWidth() - 50, getHeight() - 50) // Bottom-right
+                    };
+
+                    // Draw corner arcs and flags
+                    for (Point corner : corners) {
+                        // Draw corner arc
+                        g.drawArc(corner.x - cornerArcSize, corner.y - cornerArcSize, 
+                                 cornerArcSize * 2, cornerArcSize * 2, 0, 90);
+                        
+                        // Draw flag (triangle on a pole)
+                        g.setColor(Color.WHITE);
+                        // Flag pole
+                        g.drawLine(corner.x, corner.y, corner.x, corner.y - flagSize * 2);
+                        // Flag (colored triangle)
+                        g.setColor(Color.RED);
+                        int[] xPoints = {corner.x, corner.x, corner.x + flagSize};
+                        int[] yPoints = {corner.y - flagSize * 2, corner.y - flagSize, corner.y - flagSize * 2};
+                        g.fillPolygon(xPoints, yPoints, 3);
+                    }
+                }
+    };
         fieldPanel.setPreferredSize(new Dimension(800, 500));
         fieldPanel.setBackground(new Color(139, 69, 19));
         add(fieldPanel, BorderLayout.CENTER);
