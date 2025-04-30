@@ -33,9 +33,15 @@ public class GamePanel extends JPanel {
         football = new Football(165, 280);
         goalTracker = new Goal();
 
+         // Styling the Score Board
         scoreLabel = new JLabel(goalTracker.getScoreText(), SwingConstants.CENTER);
-        scoreLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        scoreLabel.setFont(new Font("Verdana", Font.BOLD, 22));
         scoreLabel.setForeground(Color.WHITE);
+        scoreLabel.setOpaque(true);
+        scoreLabel.setBackground(new Color(0, 100, 0)); // Background color
+        scoreLabel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+        scoreLabel.setPreferredSize(new Dimension(800, 50));
+
         add(scoreLabel, BorderLayout.NORTH);
 
         JPanel fieldPanel = new JPanel() {
