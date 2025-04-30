@@ -120,31 +120,31 @@ public class GamePanel extends JPanel {
 
         footballTimer = new Timer(20, e -> {
             football.move();
-            if (football.getX() + 20 >= defender.getX()) {
+
+            if (football.getBounds().intersects(defender.getBounds())) {
                 footballTimer.stop();
                 footballMoving = false;
 
-                if (football.getY() >= defender.getY() && football.getY() <= defender.getY() + defender.getHeight()) {
-                    goalTracker.defenderSaved();
-                    statusMessage = "SAVED by the Defender!";
-                    Sound.playSound("sounds/defender_save.wav");
-                } else {
-                    goalTracker.strikerScored();
-                    statusMessage = "GOAL!";
-                    Sound.playSound("sounds/cheer.wav");
-                }
+                goalTracker.defenderSaved();
+                statusMessage = "SAVED by the Defender!";
+                Sound.playSound("sounds/defender_save.wav");
 
-                scoreLabel.setText(goalTracker.getScoreText());
-                football.resetPosition();
-                football.setMoving(false);
-                striker.setY(280);
-                defender.setY(250);
-                awaitingNextRound = true;
-                repaint();
+                endRound();
             }
+
+            if (football.getX() >= getWidth() - 130) {
+                footballTimer.stop();
+                footballMoving = false;
+
+                goalTracker.strikerScored();
+                statusMessage = "GOAL!";
+                Sound.playSound("sounds/cheer.wav");
+
+                endRound();
+            }
+
             repaint();
         });
-
         movementTimer = new Timer(20, e -> {
             if (!awaitingNextRound) {
                 if (pressedKeys.contains(KeyEvent.VK_W)) striker.moveUp();
@@ -218,4 +218,15 @@ public class GamePanel extends JPanel {
         requestFocusInWindow();
         repaint();
     }
+    
+    private void endRound() {
+        football.resetPosition();
+        football.setMoving(false);
+        striker.setY(280);
+        defender.setY(250);
+        awaitingNextRound = true;
+        scoreLabel.setText(goalTracker.getScoreText());
+        repaint();
+    }
+
 }
