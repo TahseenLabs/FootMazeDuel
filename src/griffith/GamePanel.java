@@ -209,6 +209,7 @@ public class GamePanel extends JPanel {
         resetButton.setBackground(new Color(220, 20, 60)); 
         resetButton.setForeground(Color.WHITE);
         resetButton.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+        resetButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); //Changing cursor to hand icon when hovering over
         resetButton.addActionListener(e -> resetGame());
 
         buttonPanel.add(resetButton);
