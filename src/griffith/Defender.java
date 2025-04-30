@@ -1,21 +1,23 @@
 package griffith;
-import javax.swing.*;
+
 import java.awt.*;
+
+import javax.swing.ImageIcon;
 
 public class Defender {
     private int x, y;
-    private final int WIDTH = 30;
-    private final int HEIGHT = 80;
+    private final int WIDTH = 300;  // Match striker width
+    private final int HEIGHT = 300; // Match striker height
     private Image defenderImage;
-    
+
     public Defender(int x, int y) {
         this.x = x;
         this.y = y;
-        defenderImage = new ImageIcon("images/defender-img.png").getImage();  // Load defender image
+        defenderImage = new ImageIcon("images/defender-img.png").getImage(); // Use defender image
     }
 
     public void moveUp() {
-        if (y > 60) y -= 15;
+        if (y > 20) y -= 15;
     }
 
     public void moveDown() {
@@ -23,7 +25,7 @@ public class Defender {
     }
 
     public void draw(Graphics g) {
-        g.drawImage(defenderImage, x, y, WIDTH, HEIGHT, null);  // Draw defender image
+        g.drawImage(defenderImage, x, y, WIDTH, HEIGHT, null); 
     }
 
     public int getX() {
@@ -39,22 +41,18 @@ public class Defender {
     }
 
     public void setY(int y) {
-        this.y = y;
-    }
-
-    // Method for defender to shoot the ball
-    public void shootBall(Football football) {
-        if (football.getX() > this.x && football.getX() < this.x + 30 && football.getY() > this.y && football.getY() < this.y + 80) {
-            // Logic for defender shooting the ball, for example, moving it forward
-            football.setX(football.getX() + 15);  // Move the ball a bit after defender "shoots"
-            System.out.println("Defender shoots the ball!");
-        }
+        this.y = y;}
+     // Defender shooting the ball logic
+        public void shootBall(Football football) {
+            if (football.getX() > this.x && football.getX() < this.x + 30 &&
+                football.getY() > this.y && football.getY() < this.y + 80) {
+                football.setX(football.getX() + 15);
+                System.out.println("Defender shoots the ball!");}
     }
 
 	public Object moveRight() {
-		// TODO Auto-generated method stub
 		return null;
-	}
-
 	
+	
+	}
 }

@@ -26,7 +26,7 @@ public class GamePanel extends JPanel {
         setLayout(new BorderLayout());
 
         striker = new Striker(-15, 280);
-        defender = new Defender(700, 250);
+        defender = new Defender(500, 250);
         football = new Football(165, 280);
         goalTracker = new Goal();
 
@@ -198,7 +198,7 @@ public class GamePanel extends JPanel {
                         case KeyEvent.VK_DOWN -> defender.moveRight();
                         case KeyEvent.VK_SPACE -> {
                             // Defender shoots the ball after the striker attempts
-                            defender.shootBall(football);
+                           
              
                   repaint();
                     }
