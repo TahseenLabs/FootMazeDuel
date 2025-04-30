@@ -150,9 +150,11 @@ public class GamePanel extends JPanel {
                 if (football.getY() >= defender.getY() && football.getY() <= defender.getY() + defender.getHeight()) {
                     goalTracker.defenderSaved();
                     statusMessage = "SAVED by the Defender!";
+                    Sound.playSound("sounds/defender_save.wav"); 
                 } else {
                     goalTracker.strikerScored();
                     statusMessage = "GOAL!";
+                    Sound.playSound("sounds/cheer.wav"); 
                 }
 
                 scoreLabel.setText(goalTracker.getScoreText());
@@ -226,6 +228,7 @@ public class GamePanel extends JPanel {
         scoreLabel.setText(goalTracker.getScoreText());
         requestFocusInWindow();
         repaint();
+        
     }
     
          
