@@ -3,6 +3,8 @@ package griffith;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class GamePanel extends JPanel {
     private JLabel scoreLabel;
@@ -12,14 +14,15 @@ public class GamePanel extends JPanel {
     private Football football;
     private Timer footballTimer;
     private Goal goalTracker;
+    private Timer movementTimer;
 
+    private final Set<Integer> pressedKeys = new HashSet<>();
     private boolean footballMoving = false;
     private boolean awaitingNextRound = false;
     private boolean enterKeyLock = false;
     private String statusMessage = "";
-    private Timer delayTimer;
     private boolean canStartNextRound = false;
-    
+
     public GamePanel() {
         setPreferredSize(new Dimension(800, 600));
         setBackground(new Color(139, 69, 19));
@@ -40,41 +43,28 @@ public class GamePanel extends JPanel {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
-                // Draw green field
+                // Draw field
                 g.setColor(Color.GREEN);
                 g.fillRect(50, 50, getWidth() - 100, getHeight() - 100);
 
-                // Set white color for all markings
                 g.setColor(Color.WHITE);
-                
-                // Field boundary
                 g.drawRect(50, 50, getWidth() - 100, getHeight() - 100);
-                
-                // Center line
                 g.drawLine(getWidth() / 2, 50, getWidth() / 2, getHeight() - 50);
-                
-                // Center circle
                 g.drawOval(getWidth() / 2 - 50, getHeight() / 2 - 50, 100, 100);
                 g.fillOval(getWidth() / 2 - 5, getHeight() / 2 - 5, 10, 10);
 
-                // Penalty areas (unchanged)
                 int sixYardDepth = 54;
                 int sixYardWidth = 108;
                 int eighteenYardDepth = 162;
                 int eighteenYardWidth = 324;
 
-                // Left penalty area
-                g.drawRect(50, getHeight() / 2 - eighteenYardWidth/2, eighteenYardDepth, eighteenYardWidth);
-                g.drawRect(50, getHeight() / 2 - sixYardWidth/2, sixYardDepth, sixYardWidth);
-                
-                // Right penalty area
-                g.drawRect(getWidth() - 80 - eighteenYardDepth, getHeight() / 2 - eighteenYardWidth/2, eighteenYardDepth, eighteenYardWidth);
-                g.drawRect(getWidth() - 80 - sixYardDepth, getHeight() / 2 - sixYardWidth/2, sixYardDepth, sixYardWidth);
+                g.drawRect(50, getHeight() / 2 - eighteenYardWidth / 2, eighteenYardDepth, eighteenYardWidth);
+                g.drawRect(50, getHeight() / 2 - sixYardWidth / 2, sixYardDepth, sixYardWidth);
+                g.drawRect(getWidth() - 80 - eighteenYardDepth, getHeight() / 2 - eighteenYardWidth / 2, eighteenYardDepth, eighteenYardWidth);
+                g.drawRect(getWidth() - 80 - sixYardDepth, getHeight() / 2 - sixYardWidth / 2, sixYardDepth, sixYardWidth);
 
-                // Draw corner arcs and flags
                 drawCornerArcsAndFlags(g);
 
-                // Simple goalposts (just white rectangles)
                 g.fillRect(50, getHeight() / 2 - 100, 30, 200); // Left goal
                 g.fillRect(getWidth() - 80, getHeight() / 2 - 100, 30, 200); // Right goal
 
@@ -82,7 +72,6 @@ public class GamePanel extends JPanel {
                 striker.draw(g);
                 football.draw(g, this);
 
-                // Draw message if needed
                 if (!statusMessage.isEmpty()) {
                     g.setFont(new Font("Arial", Font.BOLD, 40));
                     g.setColor(Color.YELLOW);
@@ -94,49 +83,37 @@ public class GamePanel extends JPanel {
             }
 
             private void drawCornerArcsAndFlags(Graphics g) {
-               // int cornerArcSize = 20;
                 int flagSize = 15;
-                
-                // Four corners of the field (adjusted to be inside boundaries)
                 Point[] corners = {
-                    new Point(50, 50), // Top-left
-                    new Point(getWidth() - 50, 50), // Top-right
-                    new Point(50, getHeight() - 50), // Bottom-left
-                    new Point(getWidth() - 50, getHeight() - 50) // Bottom-right
+                        new Point(50, 50),
+                        new Point(getWidth() - 50, 50),
+                        new Point(50, getHeight() - 50),
+                        new Point(getWidth() - 50, getHeight() - 50)
                 };
 
-                // Draw corner arcs and flags
                 for (Point corner : corners) {
-                    // Draw corner arc (now properly inside the field)
-                    //g.drawArc(corner.x, corner.y, 
-                      //       cornerArcSize * 2, cornerArcSize * 2, 90, 90);
-                    
-                    // Draw flag (adjusted positions)
                     g.setColor(Color.WHITE);
-                    // Flag pole (positioned at corner point)
                     int poleX = corner.x;
                     int poleY = corner.y;
-                    if (corner.x == 50) { // Left side
-                        poleX += 2; // Slightly inside
+                    if (corner.x == 50) {
+                        poleX += 2;
                         g.drawLine(poleX, poleY, poleX, poleY - flagSize * 2);
-                        // Flag (pointing outward)
                         g.setColor(Color.RED);
                         int[] xPoints = {poleX, poleX, poleX + flagSize};
                         int[] yPoints = {poleY - flagSize * 2, poleY - flagSize, poleY - flagSize * 2};
                         g.fillPolygon(xPoints, yPoints, 3);
-                    } else { // Right side
-                        poleX -= 2; // Slightly inside
+                    } else {
+                        poleX -= 2;
                         g.drawLine(poleX, poleY, poleX, poleY - flagSize * 2);
-                        // Flag (pointing outward)
                         g.setColor(Color.RED);
                         int[] xPoints = {poleX, poleX, poleX - flagSize};
                         int[] yPoints = {poleY - flagSize * 2, poleY - flagSize, poleY - flagSize * 2};
                         g.fillPolygon(xPoints, yPoints, 3);
                     }
-                    
-                    
-                }}
+                }
+            }
         };
+
         fieldPanel.setPreferredSize(new Dimension(800, 500));
         fieldPanel.setBackground(new Color(139, 69, 19));
         add(fieldPanel, BorderLayout.CENTER);
@@ -150,26 +127,34 @@ public class GamePanel extends JPanel {
                 if (football.getY() >= defender.getY() && football.getY() <= defender.getY() + defender.getHeight()) {
                     goalTracker.defenderSaved();
                     statusMessage = "SAVED by the Defender!";
-                    Sound.playSound("sounds/defender_save.wav"); 
+                    Sound.playSound("sounds/defender_save.wav");
                 } else {
                     goalTracker.strikerScored();
                     statusMessage = "GOAL!";
-                    Sound.playSound("sounds/cheer.wav"); 
+                    Sound.playSound("sounds/cheer.wav");
                 }
 
                 scoreLabel.setText(goalTracker.getScoreText());
-
                 football.resetPosition();
                 football.setMoving(false);
-
                 striker.setY(280);
                 defender.setY(250);
-
                 awaitingNextRound = true;
                 repaint();
             }
             repaint();
         });
+
+        movementTimer = new Timer(20, e -> {
+            if (!awaitingNextRound) {
+                if (pressedKeys.contains(KeyEvent.VK_W)) striker.moveUp();
+                if (pressedKeys.contains(KeyEvent.VK_S)) striker.moveDown();
+                if (pressedKeys.contains(KeyEvent.VK_UP)) defender.moveUp();
+                if (pressedKeys.contains(KeyEvent.VK_DOWN)) defender.moveDown();
+                repaint();
+            }
+        });
+        movementTimer.start();
 
         setFocusable(true);
         requestFocusInWindow();
@@ -177,41 +162,39 @@ public class GamePanel extends JPanel {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER && !enterKeyLock) {
+                int code = e.getKeyCode();
+                pressedKeys.add(code);
+
+                if (code == KeyEvent.VK_ENTER && !enterKeyLock) {
                     enterKeyLock = true;
                     if (awaitingNextRound) {
                         statusMessage = "";
                         awaitingNextRound = false;
                         repaint();
                     } else if (!footballMoving) {
-                        football.setMoving(true);
-                        footballTimer.start();
-                        footballMoving = true;
+                        Timer launchDelay = new Timer(300, evt -> {
+                            if (!footballMoving) {
+                                football.setMoving(true);
+                                footballTimer.start();
+                                footballMoving = true;
+                            }
+                        });
+                        launchDelay.setRepeats(false);
+                        launchDelay.start();
                     }
                 }
 
-                if (!awaitingNextRound) {
-                    switch (e.getKeyCode()) {
-                        case KeyEvent.VK_W -> striker.move();
-                        case KeyEvent.VK_S -> striker.moveRight();
-                        case KeyEvent.VK_UP -> defender.moveUp();
-                        case KeyEvent.VK_DOWN -> defender.moveRight();
-                        case KeyEvent.VK_SPACE -> {
-                            // Defender shoots the ball after the striker attempts
-                           
-             
-                  repaint();
-                    }
-                }
-                    repaint();     
+                if (code == KeyEvent.VK_SPACE && !awaitingNextRound) {
+                    // Optionally add action for SPACE
+                    repaint();
                 }
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    enterKeyLock = false;
-                }
+                int code = e.getKeyCode();
+                pressedKeys.remove(code);
+                if (code == KeyEvent.VK_ENTER) enterKeyLock = false;
             }
         });
 
@@ -220,9 +203,9 @@ public class GamePanel extends JPanel {
         resetButton.addActionListener(e -> resetGame());
         add(resetButton, BorderLayout.SOUTH);
     }
-  
+
     private void resetGame() {
-        striker.reset();  // Use this instead of setY(280)
+        striker.reset();
         defender.setY(250);
         football.resetPosition();
         football.setMoving(false);
@@ -234,8 +217,5 @@ public class GamePanel extends JPanel {
         scoreLabel.setText(goalTracker.getScoreText());
         requestFocusInWindow();
         repaint();
-        
     }
-    
-         
 }

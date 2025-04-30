@@ -17,11 +17,11 @@ public class Defender {
     }
 
     public void moveUp() {
-        if (y > 20) y -= 15;
+        if (y > 20) y -= 5;
     }
 
     public void moveDown() {
-        if (y < 440) y += 15;
+        if (y < 440) y += 5;
     }
 
     public void draw(Graphics g) {

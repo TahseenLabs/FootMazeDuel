@@ -25,14 +25,14 @@ class Striker {
     }
     
     // Method for vertical movement of the striker
-    public void move() {
+    public void moveUp() {
         y += MOVE_SPEED * direction;
         if (y > 200) direction = -1;
         if (y < 40) direction = 1;
     }
     
     // Method to move the striker down (moving right in the vertical sense)
-    public void moveRight() {
+    public void moveDown() {
         if (y < 350) {
             y += MOVE_SPEED;
         }
