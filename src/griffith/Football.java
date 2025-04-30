@@ -45,4 +45,9 @@ public class Football {
     public int getY() {
         return y;
     }
+
+	public void setX(int i) {
+		// TODO Auto-generated method stub
+		
+	}
 }

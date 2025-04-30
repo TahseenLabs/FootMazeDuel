@@ -196,8 +196,14 @@ public class GamePanel extends JPanel {
                         case KeyEvent.VK_S -> striker.moveRight();
                         case KeyEvent.VK_UP -> defender.moveUp();
                         case KeyEvent.VK_DOWN -> defender.moveRight();
+                        case KeyEvent.VK_SPACE -> {
+                            // Defender shoots the ball after the striker attempts
+                            defender.shootBall(football);
+             
+                  repaint();
                     }
-                    repaint();
+                }
+                    repaint();     
                 }
             }
 
