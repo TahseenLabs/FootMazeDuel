@@ -198,10 +198,22 @@ public class GamePanel extends JPanel {
             }
         });
 
+        // Creating panel to hold the "Reset" button
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10));
+        buttonPanel.setBackground(new Color(139, 69, 19)); // Background color
+
         resetButton = new JButton("Reset Game");
+        resetButton.setPreferredSize(new Dimension(150, 40));
         resetButton.setFont(new Font("Arial", Font.BOLD, 16));
+        resetButton.setFocusPainted(false);
+        resetButton.setBackground(new Color(220, 20, 60)); 
+        resetButton.setForeground(Color.WHITE);
+        resetButton.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+        resetButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); //Changing cursor to hand icon when hovering over
         resetButton.addActionListener(e -> resetGame());
-        add(resetButton, BorderLayout.SOUTH);
+
+        buttonPanel.add(resetButton);
+        add(buttonPanel, BorderLayout.SOUTH);
     }
 
     private void resetGame() {
