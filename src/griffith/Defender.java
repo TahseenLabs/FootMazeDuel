@@ -26,7 +26,7 @@ public class Defender {
     }
 
     public void moveDown() {
-        if (y < 440) y += 5;
+        if (y < 160) y += 5;
     }
 
     public void draw(Graphics g) {

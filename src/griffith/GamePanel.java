@@ -28,8 +28,8 @@ public class GamePanel extends JPanel {
         setBackground(new Color(139, 69, 19));
         setLayout(new BorderLayout());
 
-        striker = new Striker(-15, 280);
-        defender = new Defender(500, 250);
+        striker = new Striker(-15, 90);
+        defender = new Defender(500, 90);
         football = new Football(165, 280);
         goalTracker = new Goal();
 
@@ -218,7 +218,7 @@ public class GamePanel extends JPanel {
 
     private void resetGame() {
         striker.reset();
-        defender.setY(250);
+        defender.setY(90);
         football.resetPosition();
         football.setMoving(false);
         footballTimer.stop();
@@ -234,8 +234,8 @@ public class GamePanel extends JPanel {
     private void endRound() {
         football.resetPosition();
         football.setMoving(false);
-        striker.setY(280);
-        defender.setY(250);
+        striker.setY(90);
+        defender.setY(90);
         awaitingNextRound = true;
         scoreLabel.setText(goalTracker.getScoreText());
         repaint();

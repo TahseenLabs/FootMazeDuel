@@ -12,8 +12,6 @@ class Striker {
     private int x, y;
     private final int WIDTH = 300;
     private final int HEIGHT = 300;
-    private final int MOVE_SPEED = 5;
-    private int direction = 1;
     private Image strikerImage;
     
     // Constructor to set initial position of the Striker
@@ -26,16 +24,12 @@ class Striker {
     
     // Method for vertical movement of the striker
     public void moveUp() {
-        y += MOVE_SPEED * direction;
-        if (y > 200) direction = -1;
-        if (y < 40) direction = 1;
+    	if (y > 20) y -= 5;
     }
     
     // Method to move the striker down (moving right in the vertical sense)
     public void moveDown() {
-        if (y < 350) {
-            y += MOVE_SPEED;
-        }
+    	if (y < 160) y += 5;
     }
     
     // Method to draw Striker's image
@@ -49,10 +43,9 @@ class Striker {
     public int getY() { return y; }
 
 	public void setY(int y) {
-		this.y = 280;
+		this.y = 90;
 	}
 	  public void reset() {
-	        this.y = 280;  // Resets to initial Y position
-	        this.direction = 1;  // Resets movement direction
+	        this.y = 90;  // Resets to initial Y position
 	    }
 }
