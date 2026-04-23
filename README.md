@@ -82,7 +82,7 @@ One player controls the **Striker**, the other controls the **Defender**. The st
 | Sound | File | Trigger |
 |---|---|---|
 | Crowd Cheer | `sounds/cheer.wav` | Plays when the striker scores a goal |
-| Defender Save | `sounds/save.wav` | Plays when the defender successfully blocks the ball |
+| Defender Save | `sounds/defender_save.wav` | Plays when the defender successfully blocks the ball |
 
 ---
 
